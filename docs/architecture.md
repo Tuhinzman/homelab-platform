@@ -26,3 +26,7 @@
 - Endpoint: 10.0.1.10:6443
 - Version: v1.31.14
 - OS: Ubuntu 24.04.4 LTS (all nodes)
+
+## Verified Runtime Details (Day 4)
+- Kernel: 6.8.0-107-generic
+- Container runtime: containerd 1.7.28
