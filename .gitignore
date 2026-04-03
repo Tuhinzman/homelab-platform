@@ -1,0 +1,17 @@
+*.pem
+*.key
+id_rsa*
+kubeconfig
+*.kubeconfig
+.kube/
+*.tfvars
+*.tfstate
+*.tfstate.backup
+.terraform/
+.env
+.env.*
+*.ovpn
+.DS_Store
+.vscode/
+.idea/
+*.swp
