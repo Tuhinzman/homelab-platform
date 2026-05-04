@@ -1,164 +1,122 @@
-<div align="center">
+<h1 align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=4000&pause=1000&color=36BCF7&center=true&vCenter=true&random=false&width=600&lines=Hey+there!+I'm+Tuhin+Zaman+%F0%9F%91%8B;Cloud+DevOps+Engineer+%40+VistaJet;AWS+Certified+%C2%B7+CKA+%C2%B7+Terraform;Building+Reliable+Infrastructure" alt="Typing SVG" />
+</h1>
 
-# Homelab Platform v2.5
-
-**Production-style Kubernetes platform on Proxmox — manual-first, IaC-when-justified**
-
-[![Status](https://img.shields.io/badge/Status-In_Progress-blue?style=flat-square)](#current-progress)
-[![Phase](https://img.shields.io/badge/Phase_4_Complete_%C2%B7_5_In_Progress-orange?style=flat-square)](#current-progress)
-[![Stack](https://img.shields.io/badge/Stack-Kubernetes_%7C_Proxmox_%7C_GitOps-326CE5?style=flat-square)](#architecture)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-
-</div>
+<p align="center">
+  <a href="https://linkedin.com/in/tuhinzaman"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
+  <a href="https://github.com/Tuhinzman"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" /></a>
+  <img src="https://img.shields.io/badge/Open_to-Remote_Senior_DevOps_%2F_Platform_%2F_SRE-0e7c3f?style=for-the-badge" />
+</p>
 
 ---
 
-## What this is
+### About Me
 
-A 22-phase execution plan for building a production-style Kubernetes platform on bare-metal Proxmox — from network bridges to AI Platform extension. Every phase ends with a Break-it drill and a committed runbook. Manual-first through Phase 13 for learning depth, Terraform-first from Phase 14 onward for AWS provisioning.
+```yaml
+name: Tuhin Zaman
+role: Cloud DevOps Engineer @ VistaJet
+experience: 6+ years DevOps & cloud engineering
+location: Buffalo, NY (UTC-4) - fully remote
+current_focus:
+  - Production Kubernetes & CI/CD at VistaJet
+  - GitOps with ArgoCD, IaC with Terraform
+  - Observability (CloudWatch, Prometheus, Grafana)
+  - FinOps and cloud cost optimization
+also_building:
+  - Homelab v2.5 on Proxmox (22-phase plan)
+  - AI Platform extension (LiteLLM, Langfuse, pgvector)
+  - MK Tech Corporation - FinOps consulting
+```
 
-**Goal:** Deep hands-on platform engineering experience that mirrors real-world architecture decisions, not surface-level automation.
-
-**Built by:** [Tuhin Zaman](https://www.linkedin.com/in/tuhinzaman/) — Cloud DevOps Engineer @ VistaJet · AWS SAA-C03 · CKA
+Right now I build and manage Kubernetes and CI/CD infrastructure at VistaJet, where we run production workloads for a global aviation company.
 
 ---
 
-## Why publish this
+### Production Impact
 
-Most homelab repos are either tutorial follow-alongs or undocumented one-off scripts. This repo demonstrates:
-
-- **Production discipline** — runbooks per phase, deviation logs, drill outcomes committed before next phase
-- **Real failure modes** — not idealized happy paths; every phase documents what broke and how it was fixed
-- **Security thinking** — Pod Security Standards, NetworkPolicy default-deny, internal CA with cert-manager, etcd encryption-at-rest
-- **GitOps from day one** — separate values repo pattern, ArgoCD app-of-apps deferred until justified
-
-Sensitive operational data (encryption key fingerprints, internal credentials) is redacted in the public mirror. Full audit trail lives in the private GitLab source repo.
+<table>
+  <tr>
+    <td align="center"><b>18%</b><br/>AWS cost reduction</td>
+    <td align="center"><b>40%</b><br/>MTTR improvement</td>
+    <td align="center"><b>Zero downtime</b><br/>EKS migration</td>
+    <td align="center"><b>99.99%</b><br/>Uptime SLO</td>
+  </tr>
+  <tr>
+    <td align="center"><b>60%</b><br/>Deploy time reduction</td>
+    <td align="center"><b>SOC 2</b><br/>audit support</td>
+    <td align="center"><b>Cross-region</b><br/>DR for RDS</td>
+    <td align="center"><b>50+</b><br/>Ansible-managed nodes</td>
+  </tr>
+</table>
 
 ---
 
-## Architecture
+### Certifications
 
-<div align="center">
+<p align="center">
+  <a href="https://www.credly.com/badges/044db054-4374-419a-a665-0ece8006b515/public_url">
+    <img src="https://images.credly.com/size/110x110/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png" alt="AWS Certified Solutions Architect – Associate" height="100" />
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.credly.com/badges/151e3a60-7063-49e8-a109-71197196b631/public_url">
+    <img src="https://images.credly.com/size/110x110/images/8b8ed108-e77d-4396-ac59-2504583b9d54/cka_from_cncfsite__281_29.png" alt="Certified Kubernetes Administrator" height="100" />
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.credly.com/badges/044db054-4374-419a-a665-0ece8006b515/public_url"><b>AWS Solutions Architect Associate (SAA-C03)</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://www.credly.com/badges/151e3a60-7063-49e8-a109-71197196b631/public_url"><b>Certified Kubernetes Administrator (CKA)</b></a>
+</p>
 
-![Topology](docs/architecture/homelab-01-topology.svg)
+---
 
-</div>
+### Tech Stack
 
-| Layer | Components |
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=kubernetes,aws,azure,docker,terraform,linux,bash,git,github,githubactions,jenkins,gitlab,ansible,prometheus,grafana,python&perline=8" />
+</p>
+
+| Category | Technologies |
 |---|---|
-| **Hypervisor** | Proxmox VE 9.1 on i9-10850K · 64GB DDR4 · 2×1TB NVMe |
-| **Network** | `vmbr0` management · `vmbr1` isolated lab · Tailscale subnet router · dnsmasq on `svc-1` |
-| **Kubernetes** | kubeadm v1.31 · Calico CNI · 1 control plane + 3 workers |
-| **Platform** | MetalLB · ingress-nginx · Longhorn · cert-manager · ArgoCD · External Secrets Operator |
-| **Observability** | OpenTelemetry Collector · Prometheus · Grafana · Loki · Jaeger |
-| **CI/CD** | GitLab CE · GitLab Runner · Trivy scan · ArgoCD GitOps loop |
-| **Workload** | OpenTelemetry Astronomy Shop demo (23 microservices) |
-
-Full architecture diagrams: [topology](docs/architecture/homelab-01-topology.svg) · [platform stack](docs/architecture/homelab-02-platform-stack.svg) · [CI/CD flow](docs/architecture/homelab-03-cicd-gitops-flow.svg) · [request path](docs/architecture/homelab-04-request-traffic-path.svg) · [deployment flow](docs/architecture/homelab-05-deployment-flow-all-tools.svg)
-
----
-
-## Current progress
-
-| Phase | Focus | Status |
-|---|---|---|
-| 0 | Network · Proxmox · Tailscale | ✅ Complete |
-| 1 | VM baseline · SSH hardening | ✅ Complete |
-| 2 | kubeadm · Calico CNI | ✅ Complete |
-| 2.5 | etcd backup · restore drill | ✅ Complete |
-| 3 | MetalLB · ingress-nginx · Longhorn | ✅ Complete |
-| 4 (S1–S6) | DNS · cert-manager · internal CA | ✅ Complete |
-| 4 (S6.5) | etcd encryption-at-rest | ✅ Complete |
-| 4 (S7–S8) | Pod Security Standards · RBAC · NetworkPolicy | ✅ Complete |
-| 5 | GitLab CE · Runner · HTTPS migration | 🟡 In progress |
-| 6 | ArgoCD · GitOps values repo | ⏳ Planned |
-| 7 | External Secrets Operator | ⏳ Planned |
-| 8–11 | Observability stack | ⏳ Planned |
-| 12a–12b | OTel Demo workload | ⏳ Planned |
-| 13 | Backup · restore validation | ⏳ Planned |
-| 14–16 | Terraform · AWS · EKS migration | ⏳ Planned |
-| 17–22 | AI Platform extension | ⏳ Planned |
+| **Cloud** | AWS (EKS, EC2, RDS, S3, Lambda, VPC, IAM, Secrets Manager, CloudFormation), Azure |
+| **Orchestration** | Kubernetes, EKS, Helm, Kustomize, ArgoCD |
+| **IaC** | Terraform, CloudFormation, Ansible |
+| **CI/CD** | GitLab CI, GitHub Actions, Jenkins |
+| **Containers** | Docker, containerd |
+| **Observability** | CloudWatch, Prometheus, Grafana, Loki, OpenTelemetry |
+| **Security & Compliance** | Wiz, Trivy, SOC 2, External Secrets Operator, cert-manager |
+| **Scripting** | Python, Bash |
+| **OS & Virtualization** | Ubuntu, Amazon Linux, Proxmox |
 
 ---
 
-## Repository structure
+### Featured Project
 
-```
-homelab/
-├── configs/
-│   ├── phase-0/                 # Network bridges, nftables, IP forwarding
-│   └── phase-1/                 # VM cloud-init configs (SSH-key auth only)
-├── docs/
-│   ├── architecture/            # 5 SVG architecture diagrams
-│   └── runbooks/                # Per-phase runbooks (English)
-│       ├── phase-0-en.md
-│       ├── phase-1-en.md
-│       ├── phase-2-kubeadm-en.md
-│       ├── phase-2.5/drills/    # etcd backup drill
-│       ├── phase-3-en.md
-│       ├── phase-3/drills/      # 3 chaos drills with logs
-│       ├── phase-4/             # CA, DNS, NetworkPolicy, PSS+RBAC runbooks
-│       └── phase-5/             # GitLab installation
-├── helm-values/
-│   └── cert-manager/            # cert-manager Helm values
-├── infrastructure/
-│   └── etcd-backup/             # systemd unit + script + timer
-├── k8s/
-│   ├── cert-manager/            # ClusterIssuer manifests
-│   ├── namespaces/              # PSS-labeled namespaces
-│   └── network-policies/        # default-deny + allow-DNS per namespace
-└── manifests/
-    ├── phase-3/                 # ingress-nginx, Longhorn, MetalLB
-    └── phase-4/dns/             # CoreDNS lab block, dnsmasq config
-```
+<table>
+  <tr>
+    <td width="100%">
+      <h3 align="center">Homelab Platform v2.5 — Production-style Kubernetes on Proxmox</h3>
+      <p align="center">
+        <a href="https://github.com/Tuhinzman/homelab-platform">
+          <img src="https://img.shields.io/badge/22--Phase_Manual--First_Platform-36BCF7?style=for-the-badge" />
+        </a>
+      </p>
+      <p align="center">22-phase execution plan: bare-metal Proxmox → Kubernetes → GitOps → Observability → AWS/EKS migration → AI Platform extension. Per-phase runbooks, Break-it drills, deviation logs. Manual-first through Phase 13 for learning depth, Terraform-first from Phase 14 onward.</p>
+    </td>
+  </tr>
+</table>
+
+More repositories: [Terraform AWS modules](https://github.com/Tuhinzman/terraform-ecommerce-infrastructure) · [Three-tier architecture](https://github.com/Tuhinzman/aws-three-tier-terraform) · [CKA prep](https://github.com/Tuhinzman/cka-simulator) · [All repos](https://github.com/Tuhinzman?tab=repositories)
 
 ---
 
-## Operating principles
+### GitHub Stats
 
-**Manual first, IaC when justified** — Homelab execution is manual through Phase 13 to expose every failure mode and design decision. Terraform begins at Phase 14 for AWS provisioning, where automation is operationally essential.
-
-**Pre-flight verification** — Every change preceded by current-state audit, intended-change statement, expected post-state. No momentum execution on irreversible operations.
-
-**Validation per step, not per batch** — Run, verify output, proceed. Never assume success without explicit confirmation.
-
-**Break-it discipline** — Each phase ends with deliberate failure injection: kill a core component, simulate a realistic outage, validate recovery time. Drill outcomes committed to Git before next phase begins.
-
-**Deviation tracking** — Architecture deviations logged with rationale, deadline, and closure criteria. Examples in `docs/runbooks/`.
+<p align="center">
+  <img width="48%" src="https://github-readme-stats.vercel.app/api?username=Tuhinzman&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=36BCF7&icon_color=36BCF7&text_color=FFFFFF" />
+  <img width="40%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Tuhinzman&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=36BCF7&text_color=FFFFFF" />
+</p>
 
 ---
 
-## Notable runbooks
-
-- **[Phase 4 — Internal CA workflow](docs/runbooks/phase-4/ca-en.md)** — cert-manager + ClusterIssuer + signing CA setup. SHA fingerprints redacted; methodology intact.
-- **[Phase 4 — NetworkPolicy](docs/runbooks/phase-4/network-policy-en.md)** — default-deny baseline, allow-DNS exceptions, additive ablation drill.
-- **[Phase 4 — Pod Security Standards + RBAC](docs/runbooks/phase-4/pss-rbac-en.md)** — PSS namespace labels, default ServiceAccount tightening.
-- **[Phase 3 — Drill logs](docs/runbooks/phase-3/drills/)** — ingress pod kill, Longhorn replica failure, MetalLB speaker kill (raw outputs).
-- **[Phase 5 — GitLab CE](docs/runbooks/phase-5/gitlab-en.md)** — manual install, HTTPS migration with internal CA.
-
----
-
-## What's not in this public mirror
-
-- `*-bn.md` — Bilingual runbooks include Bangla versions in the source repo; only English published here for accessibility.
-- `docs/runbooks/phase-4/s6.5/` — etcd encryption-at-rest procedure with operational hash artifacts. Workflow described in `docs/runbooks/phase-4/ca-en.md` instead.
-- `CLAUDE.md` — internal AI peer protocol for execution discipline. Personal working configuration.
-- Sensitive operational SHAs in `ca-en.md` — replaced with `<REDACTED_SHA_N>` markers.
-
-Full repo with audit trail intact: private GitLab source.
-
----
-
-## License
-
-MIT — see [LICENSE](LICENSE).
-
----
-
-<div align="center">
-
-**Built by [Tuhin Zaman](https://www.linkedin.com/in/tuhinzaman/)** · Cloud DevOps Engineer @ VistaJet · Buffalo, NY
-
-*Open to remote Senior DevOps, Platform Engineering, and SRE roles.*
-
-</div>
+<p align="center"><i>Available for remote Senior DevOps, Platform Engineering, and SRE roles.</i></p>
