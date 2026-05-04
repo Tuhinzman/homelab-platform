@@ -1,0 +1,18 @@
+[Unit]
+Description=etcd snapshot timer (every 6h, 5min after boot)
+
+[Timer]
+Unit=etcd-snapshot.service
+# First run: 5min after boot (lets etcd settle)
+OnBootSec=5min
+# Subsequent runs: 6h after previous completion
+OnUnitActiveSec=6h
+# If VM was down when a run was scheduled, run on next boot (catch-up)
+Persistent=true
+# Small randomization so multiple CPs (future HA) don't hammer etcd simultaneously
+RandomizedDelaySec=30s
+# Accuracy — coarser = more power-efficient; 1min good balance
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,73 @@
+00:48:20.3N HTTP=200 t=0.009547s
+00:48:20.3N HTTP=200 t=0.013292s
+00:48:21.3N HTTP=200 t=0.011007s
+00:48:22.3N HTTP=200 t=0.090352s
+00:48:22.3N HTTP=200 t=0.010261s
+00:48:23.3N HTTP=200 t=0.011691s
+00:48:23.3N HTTP=200 t=0.014217s
+00:48:24.3N HTTP=200 t=0.013831s
+00:48:24.3N HTTP=200 t=0.013747s
+00:48:25.3N HTTP=200 t=0.016224s
+00:48:26.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 6 ms: Couldn't connect to server
+HTTP=000 t=0.006581s
+CURL_ERR
+00:48:26.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 8 ms: Couldn't connect to server
+HTTP=000 t=0.008857s
+CURL_ERR
+00:48:27.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 8 ms: Couldn't connect to server
+HTTP=000 t=0.008345s
+CURL_ERR
+00:48:27.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 7 ms: Couldn't connect to server
+HTTP=000 t=0.007773s
+CURL_ERR
+00:48:28.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 97 ms: Couldn't connect to server
+HTTP=000 t=0.097397s
+CURL_ERR
+00:48:29.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 5 ms: Couldn't connect to server
+HTTP=000 t=0.005803s
+CURL_ERR
+00:48:29.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 7 ms: Couldn't connect to server
+HTTP=000 t=0.007031s
+CURL_ERR
+00:48:30.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 6 ms: Couldn't connect to server
+HTTP=000 t=0.006454s
+CURL_ERR
+00:48:30.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 9 ms: Couldn't connect to server
+HTTP=000 t=0.009389s
+CURL_ERR
+00:48:31.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 7 ms: Couldn't connect to server
+HTTP=000 t=0.007910s
+CURL_ERR
+00:48:31.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 6 ms: Couldn't connect to server
+HTTP=000 t=0.006775s
+CURL_ERR
+00:48:32.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 8 ms: Couldn't connect to server
+HTTP=000 t=0.008403s
+CURL_ERR
+00:48:33.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 10 ms: Couldn't connect to server
+HTTP=000 t=0.010279s
+CURL_ERR
+00:48:33.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 5 ms: Couldn't connect to server
+HTTP=000 t=0.005808s
+CURL_ERR
+00:48:34.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 60 ms: Couldn't connect to server
+HTTP=000 t=0.060789s
+CURL_ERR
+00:48:34.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 6 ms: Couldn't connect to server
+HTTP=000 t=0.006109s
+CURL_ERR
+00:48:35.3N curl: (7) Failed to connect to 10.10.0.200 port 80 after 10 ms: Couldn't connect to server
+HTTP=000 t=0.010663s
+CURL_ERR
+00:48:35.3N HTTP=200 t=0.014160s
+00:48:36.3N HTTP=200 t=0.014067s
+00:48:37.3N HTTP=200 t=0.015431s
+00:48:37.3N HTTP=200 t=0.011121s
+00:48:38.3N HTTP=200 t=0.012353s
+00:48:38.3N HTTP=200 t=0.013862s
+00:48:39.3N HTTP=200 t=0.009874s
+00:48:39.3N HTTP=200 t=0.074254s
+00:48:40.3N HTTP=200 t=0.014273s
+00:48:41.3N HTTP=200 t=0.015238s
+00:48:41.3N HTTP=200 t=0.012014s
+00:48:42.3N HTTP=200 t=0.012389s

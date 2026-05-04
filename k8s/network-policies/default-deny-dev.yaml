@@ -1,0 +1,15 @@
+# default-deny-dev.yaml — Phase 4 S8
+# Per v2.5 plan §Phase 4: default-deny ingress + egress per namespace.
+# Empty podSelector matches all pods in the namespace.
+# No allow rules below = total deny in both directions.
+# Reversal: kubectl delete -f k8s/network-policies/default-deny-dev.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny
+  namespace: dev
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress

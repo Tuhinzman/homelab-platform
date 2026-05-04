@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 480" role="img" aria-labelledby="t d">
+  <title id="t">Platform stack running on the Kubernetes cluster</title>
+  <desc id="d">Five logical layers run on the cluster. Workload at the top is the OTel Demo in dev, staging, and prod namespaces. Access and security: MetalLB, ingress-nginx, cert-manager. Delivery: ArgoCD and External Secrets Operator. Observability: OTel Collector in gateway mode, Prometheus with Grafana, Loki and Jaeger. Foundation: Calico with NetworkPolicy, Longhorn two-replica storage, and metrics-server.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .t  { font-size: 14px; fill: #3d3d3a; }
+    .ts { font-size: 12px; fill: #73726c; }
+    .th { font-size: 14px; font-weight: 500; fill: #3d3d3a; }
+    .c-gray   > rect { fill: #F1EFE8; stroke: #5F5E5A; }
+    .c-gray   > text.th { fill: #444441; }
+    .c-gray   > text.ts { fill: #5F5E5A; }
+    .c-blue   > rect { fill: #E6F1FB; stroke: #185FA5; }
+    .c-blue   > text.th { fill: #0C447C; }
+    .c-blue   > text.ts { fill: #185FA5; }
+    .c-purple > rect { fill: #EEEDFE; stroke: #534AB7; }
+    .c-purple > text.th { fill: #3C3489; }
+    .c-purple > text.ts { fill: #534AB7; }
+    .c-teal   > rect { fill: #E1F5EE; stroke: #0F6E56; }
+    .c-teal   > text.th { fill: #085041; }
+    .c-teal   > text.ts { fill: #0F6E56; }
+  </style>
+
+  <g class="c-blue">
+    <rect x="40" y="30" width="600" height="430" rx="14" stroke-width="0.5"/>
+    <text class="th" x="56" y="50" dominant-baseline="central">Kubernetes cluster</text>
+    <text class="ts" x="180" y="50" dominant-baseline="central">· what runs on the 4 VMs</text>
+  </g>
+
+  <text class="ts" x="50" y="95" dominant-baseline="central">Workload</text>
+  <g class="c-purple">
+    <rect x="150" y="72" width="475" height="48" rx="8" stroke-width="0.5"/>
+    <text class="th" x="387" y="92" text-anchor="middle" dominant-baseline="central">OTel Demo (Astronomy Shop)</text>
+    <text class="ts" x="387" y="108" text-anchor="middle" dominant-baseline="central">dev · staging · prod namespaces</text>
+  </g>
+
+  <text class="ts" x="50" y="158" dominant-baseline="central">Access +</text>
+  <text class="ts" x="50" y="174" dominant-baseline="central">security</text>
+  <g class="c-gray">
+    <rect x="150" y="136" width="155" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="227" y="156" text-anchor="middle" dominant-baseline="central">MetalLB</text>
+    <text class="ts" x="227" y="176" text-anchor="middle" dominant-baseline="central">LoadBalancer IPs</text>
+  </g>
+  <g class="c-gray">
+    <rect x="310" y="136" width="155" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="387" y="156" text-anchor="middle" dominant-baseline="central">ingress-nginx</text>
+    <text class="ts" x="387" y="176" text-anchor="middle" dominant-baseline="central">HTTPS routing</text>
+  </g>
+  <g class="c-gray">
+    <rect x="470" y="136" width="155" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="547" y="156" text-anchor="middle" dominant-baseline="central">cert-manager</text>
+    <text class="ts" x="547" y="176" text-anchor="middle" dominant-baseline="central">TLS automation</text>
+  </g>
+
+  <text class="ts" x="50" y="238" dominant-baseline="central">Delivery</text>
+  <g class="c-gray">
+    <rect x="150" y="208" width="232" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="266" y="228" text-anchor="middle" dominant-baseline="central">ArgoCD</text>
+    <text class="ts" x="266" y="248" text-anchor="middle" dominant-baseline="central">GitOps · dev auto · prod manual</text>
+  </g>
+  <g class="c-gray">
+    <rect x="393" y="208" width="232" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="509" y="228" text-anchor="middle" dominant-baseline="central">External Secrets</text>
+    <text class="ts" x="509" y="248" text-anchor="middle" dominant-baseline="central">local store → AWS SSM later</text>
+  </g>
+
+  <text class="ts" x="50" y="310" dominant-baseline="central">Observ.</text>
+  <g class="c-teal">
+    <rect x="150" y="280" width="155" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="227" y="300" text-anchor="middle" dominant-baseline="central">OTel Collector</text>
+    <text class="ts" x="227" y="320" text-anchor="middle" dominant-baseline="central">gateway mode</text>
+  </g>
+  <g class="c-teal">
+    <rect x="310" y="280" width="155" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="387" y="300" text-anchor="middle" dominant-baseline="central">Prometheus</text>
+    <text class="ts" x="387" y="320" text-anchor="middle" dominant-baseline="central">+ Grafana</text>
+  </g>
+  <g class="c-teal">
+    <rect x="470" y="280" width="155" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="547" y="300" text-anchor="middle" dominant-baseline="central">Loki / Jaeger</text>
+    <text class="ts" x="547" y="320" text-anchor="middle" dominant-baseline="central">logs · traces</text>
+  </g>
+
+  <text class="ts" x="50" y="382" dominant-baseline="central">Foundation</text>
+  <g class="c-gray">
+    <rect x="150" y="352" width="155" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="227" y="372" text-anchor="middle" dominant-baseline="central">Calico</text>
+    <text class="ts" x="227" y="392" text-anchor="middle" dominant-baseline="central">CNI + NetworkPolicy</text>
+  </g>
+  <g class="c-gray">
+    <rect x="310" y="352" width="155" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="387" y="372" text-anchor="middle" dominant-baseline="central">Longhorn</text>
+    <text class="ts" x="387" y="392" text-anchor="middle" dominant-baseline="central">2-replica storage</text>
+  </g>
+  <g class="c-gray">
+    <rect x="470" y="352" width="155" height="60" rx="6" stroke-width="0.5"/>
+    <text class="th" x="547" y="372" text-anchor="middle" dominant-baseline="central">metrics-server</text>
+    <text class="ts" x="547" y="392" text-anchor="middle" dominant-baseline="central">kubectl top · HPA</text>
+  </g>
+</svg>

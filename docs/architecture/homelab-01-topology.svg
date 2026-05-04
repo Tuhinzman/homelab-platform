@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 460" role="img" aria-labelledby="t d">
+  <title id="t">Homelab v2.5 infrastructure topology</title>
+  <desc id="d">Proxmox host pve-1 at 192.168.68.200 hosts an isolated lab network 10.10.0.0/24 on bridge vmbr1. Inside the lab network sits a four-node Kubernetes cluster (k8s-cp-1 control plane and workers 1-3, with worker-3 as ingress node) plus ci-1 for GitLab and svc-1 for DNS and internal CA. A Mac on the management network reaches the lab via a Tailscale subnet router on pve-1.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .t  { font-size: 14px; fill: #3d3d3a; }
+    .ts { font-size: 12px; fill: #73726c; }
+    .th { font-size: 14px; font-weight: 500; fill: #3d3d3a; }
+    .arr { stroke: #73726c; stroke-width: 1.5; fill: none; }
+    .c-gray   > rect { fill: #F1EFE8; stroke: #5F5E5A; }
+    .c-gray   > text.th { fill: #444441; }
+    .c-gray   > text.ts { fill: #5F5E5A; }
+    .c-blue   > rect { fill: #E6F1FB; stroke: #185FA5; }
+    .c-blue   > text.th { fill: #0C447C; }
+    .c-blue   > text.ts { fill: #185FA5; }
+    .c-purple > rect { fill: #EEEDFE; stroke: #534AB7; }
+    .c-purple > text.th { fill: #3C3489; }
+    .c-purple > text.ts { fill: #534AB7; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <g class="c-gray">
+    <rect x="280" y="30" width="120" height="44" rx="8" stroke-width="0.5"/>
+    <text class="th" x="340" y="48" text-anchor="middle" dominant-baseline="central">Mac</text>
+    <text class="ts" x="340" y="62" text-anchor="middle" dominant-baseline="central">192.168.68.x</text>
+  </g>
+
+  <line x1="340" y1="74" x2="340" y2="108" class="arr" marker-end="url(#arrow)"/>
+  <text class="ts" x="348" y="92" dominant-baseline="central">Tailscale</text>
+
+  <g class="c-gray">
+    <rect x="40" y="110" width="600" height="320" rx="16" stroke-width="0.5"/>
+    <text class="th" x="56" y="130" dominant-baseline="central">pve-1</text>
+    <text class="ts" x="98" y="130" dominant-baseline="central">· Proxmox VE 9.1 · 192.168.68.200</text>
+  </g>
+
+  <g class="c-blue">
+    <rect x="55" y="148" width="570" height="270" rx="10" stroke-width="0.5"/>
+    <text class="th" x="70" y="168" dominant-baseline="central">Lab network</text>
+    <text class="ts" x="150" y="168" dominant-baseline="central">· 10.10.0.0/24 · vmbr1 · isolated</text>
+  </g>
+
+  <rect x="65" y="182" width="550" height="128" rx="10" stroke="#B4B2A9" stroke-width="0.8" stroke-dasharray="5 4" fill="none"/>
+  <g class="c-blue">
+    <text class="th" x="80" y="200" dominant-baseline="central">Kubernetes cluster</text>
+    <text class="ts" x="190" y="200" dominant-baseline="central">· kubeadm + Calico CNI</text>
+  </g>
+
+  <g class="c-purple">
+    <rect x="75" y="218" width="128" height="78" rx="6" stroke-width="0.5"/>
+    <text class="th" x="139" y="238" text-anchor="middle" dominant-baseline="central">k8s-cp-1</text>
+    <text class="ts" x="139" y="258" text-anchor="middle" dominant-baseline="central">10.10.0.10</text>
+    <text class="ts" x="139" y="276" text-anchor="middle" dominant-baseline="central">control plane</text>
+  </g>
+  <g class="c-purple">
+    <rect x="209" y="218" width="128" height="78" rx="6" stroke-width="0.5"/>
+    <text class="th" x="273" y="238" text-anchor="middle" dominant-baseline="central">k8s-worker-1</text>
+    <text class="ts" x="273" y="258" text-anchor="middle" dominant-baseline="central">10.10.0.21</text>
+    <text class="ts" x="273" y="276" text-anchor="middle" dominant-baseline="central">app workloads</text>
+  </g>
+  <g class="c-purple">
+    <rect x="343" y="218" width="128" height="78" rx="6" stroke-width="0.5"/>
+    <text class="th" x="407" y="238" text-anchor="middle" dominant-baseline="central">k8s-worker-2</text>
+    <text class="ts" x="407" y="258" text-anchor="middle" dominant-baseline="central">10.10.0.22</text>
+    <text class="ts" x="407" y="276" text-anchor="middle" dominant-baseline="central">app workloads</text>
+  </g>
+  <g class="c-purple">
+    <rect x="477" y="218" width="128" height="78" rx="6" stroke-width="0.5"/>
+    <text class="th" x="541" y="238" text-anchor="middle" dominant-baseline="central">k8s-worker-3</text>
+    <text class="ts" x="541" y="258" text-anchor="middle" dominant-baseline="central">10.10.0.23</text>
+    <text class="ts" x="541" y="276" text-anchor="middle" dominant-baseline="central">ingress node</text>
+  </g>
+
+  <g class="c-purple">
+    <rect x="90" y="328" width="230" height="72" rx="8" stroke-width="0.5"/>
+    <text class="th" x="205" y="350" text-anchor="middle" dominant-baseline="central">ci-1</text>
+    <text class="ts" x="205" y="368" text-anchor="middle" dominant-baseline="central">10.10.0.30</text>
+    <text class="ts" x="205" y="384" text-anchor="middle" dominant-baseline="central">GitLab + Runner + Registry</text>
+  </g>
+  <g class="c-purple">
+    <rect x="345" y="328" width="230" height="72" rx="8" stroke-width="0.5"/>
+    <text class="th" x="460" y="350" text-anchor="middle" dominant-baseline="central">svc-1</text>
+    <text class="ts" x="460" y="368" text-anchor="middle" dominant-baseline="central">10.10.0.50</text>
+    <text class="ts" x="460" y="384" text-anchor="middle" dominant-baseline="central">DNS + internal CA</text>
+  </g>
+</svg>

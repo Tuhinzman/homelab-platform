@@ -1,0 +1,30 @@
+# allow-dns-dev.yaml — Phase 4 S8
+# Egress allow from all dev pods to kube-system CoreDNS pods on port 53 (UDP+TCP).
+# This is the FIRST allow rule in this namespace; default-deny remains in force for everything else.
+# CoreDNS selectors: namespace via kubernetes.io/metadata.name (auto-label, k8s 1.21+),
+# pods via k8s-app=kube-dns (kubeadm-CoreDNS standard label).
+# UDP/53 = primary DNS path; TCP/53 = fallback for responses >512 bytes.
+# Asymmetric: no reciprocal ingress rule needed in kube-system (out of S8 scope, default-allow).
+# Reversal: kubectl delete -f k8s/network-policies/allow-dns-dev.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: dev
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53

@@ -1,0 +1,42 @@
+# Phase 3 storage smoke test
+# - PVC: 1Gi via default Longhorn SC (replica=2)
+# - Pod: writes timestamp to volume, reads it back
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-test
+  namespace: default
+spec:
+  accessModes: [ReadWriteOnce]   # Phase 3 = RWO; RWX (NFS) Phase 12-এ test
+  resources:
+    requests:
+      storage: 1Gi
+  # storageClassName omitted intentionally — should pick default 'longhorn'
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storage-test
+  namespace: default
+spec:
+  containers:
+    - name: app
+      image: alpine:3.20
+      command: ["sh", "-c"]
+      args:
+        - |
+          set -e
+          echo "Phase 3 test write at $(date -u)" > /data/hello.txt
+          echo "── written ──"; cat /data/hello.txt
+          echo "── disk usage ──"; df -h /data
+          echo "── filesystem ──"; mount | grep /data
+          # Keep pod alive so we can exec into it
+          sleep 3600
+      volumeMounts:
+        - name: data
+          mountPath: /data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: pvc-test

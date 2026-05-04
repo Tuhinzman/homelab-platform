@@ -1,0 +1,10 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: homelab-signing-ca
+  labels:
+    homelab.io/component: pki
+    homelab.io/phase: phase-4-s6
+spec:
+  ca:
+    secretName: homelab-signing-ca

@@ -1,0 +1,20 @@
+[Unit]
+Description=etcd snapshot (kubeadm control plane)
+# Ensure network + containerd + kubelet (and thus etcd pod) ready
+After=network-online.target containerd.service kubelet.service
+Wants=network-online.target
+# Prevent running if etcd pod isn't up (best-effort; script preflight is ultimate guard)
+ConditionPathExists=/etc/kubernetes/pki/etcd/ca.crt
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/etcd-snapshot.sh
+# Hardening
+User=root
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+# Failure visibility
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=etcd-snapshot

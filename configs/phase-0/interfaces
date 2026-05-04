@@ -1,0 +1,26 @@
+auto lo
+iface lo inet loopback
+
+iface nic0 inet manual
+    post-up /usr/sbin/ethtool -K nic0 rx-udp-gro-forwarding on rx-gro-list off || true
+
+iface nic1 inet manual
+
+# Management bridge — Proxmox UI/SSH, physical uplink
+auto vmbr0
+iface vmbr0 inet static
+    address 192.168.68.200/24
+    gateway 192.168.68.1
+    bridge-ports nic0
+    bridge-stp off
+    bridge-fd 0
+
+# Lab bridge — v2.5 spec, no physical NIC, pve-1 is gateway + NAT
+auto vmbr1
+iface vmbr1 inet static
+    address 10.10.0.1/24
+    bridge-ports none
+    bridge-stp off
+    bridge-fd 0
+
+source /etc/network/interfaces.d/*

@@ -1,0 +1,32 @@
+controller:
+  nodeSelector:
+    ingress-ready: "true"
+
+  replicaCount: 1
+
+  service:
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    annotations:
+      metallb.io/loadBalancerIPs: "10.10.0.200"
+
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: true
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+  metrics:
+    enabled: true
+
+  admissionWebhooks:
+    enabled: true
+
+defaultBackend:
+  enabled: false

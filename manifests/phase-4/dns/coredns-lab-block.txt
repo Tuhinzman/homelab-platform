@@ -1,0 +1,46 @@
+# CoreDNS Corefile — `lab:53` block (Phase 4)
+#
+# This is the block ADDED to the existing CoreDNS Corefile in kube-system/coredns ConfigMap.
+# The default `.:53` block is NOT modified — defensive design, root forwarder change has
+# cluster-wide blast radius.
+#
+# How this block is applied:
+#   - Method: kubectl patch --type merge with JSON-encoded Corefile
+#   - DO NOT use kubectl edit (paste-trap: chat-rendered content can corrupt Corefile)
+#   - Backup before any change: kubectl get cm coredns -n kube-system -o yaml > backup.yaml
+#
+# Apply procedure (from Phase 4 dns runbook):
+#   1. Backup current ConfigMap
+#   2. Capture current Corefile via jsonpath
+#   3. Append this block as a multi-line shell variable
+#   4. JSON-encode via python3 -c json.dumps and patch
+#   5. Wait ~30s for CoreDNS reload plugin to pick up changes
+#
+# Rollback:
+#   sed strip resourceVersion/uid/creationTimestamp from backup
+#   kubectl apply -f restored-backup.yaml
+#
+# This file is illustrative — the actual Corefile lives in the ConfigMap, not on disk.
+# To see live current state: kubectl -n kube-system get cm coredns -o jsonpath='{.data.Corefile}'
+
+# === Block added to .data.Corefile (after the existing .:53 block) ===
+
+lab:53 {
+    errors
+    cache 30
+    forward . 10.10.0.50
+    reload
+}
+
+# === Plugin breakdown ===
+#
+# errors      — log errors to stderr (visible via `kubectl logs`)
+# cache 30    — 30s positive/negative cache (matches default block, reduces svc-1 load)
+# forward . 10.10.0.50    — forward all queries within `lab` zone to svc-1's dnsmasq
+# reload      — auto-detect Corefile changes and reload without restart
+#
+# Plugins NOT in this block (and why):
+#   health, ready, prometheus    — root-block concerns; this block is pure forwarder
+#   loop                         — root block already has it; loop check at root level only
+#   kubernetes                   — irrelevant for non-cluster.local queries
+#   loadbalance                  — single upstream, no balancing needed

@@ -1,0 +1,58 @@
+# Longhorn values for Phase 3
+# Plan: v2.5
+# Chart: longhorn/longhorn 1.11.1
+#
+# Goal:
+# - Longhorn as default StorageClass
+# - Replica count = 2
+# - No ingress exposure yet
+# - Conservative disk usage for homelab
+
+defaultSettings:
+  # Homelab-sized replication.
+  # Default is usually 3, but v2.5 locks this to 2.
+  defaultReplicaCount: 2
+
+  # Backup target will be configured later in Phase 13.
+  backupTarget: ""
+  backupTargetCredentialSecret: ""
+
+  # Avoid disk overcommit in homelab.
+  # 100 = do not provision more than actual available disk capacity.
+  storageOverProvisioningPercentage: 100
+
+  # Keep 25% disk free before Longhorn stops scheduling more replicas.
+  storageMinimalAvailablePercentage: 25
+
+  # Best-effort rebalance if replicas become uneven across nodes.
+  replicaAutoBalance: best-effort
+
+persistence:
+  # Make Longhorn the default StorageClass.
+  defaultClass: true
+
+  # Match v2.5 replica decision.
+  defaultClassReplicaCount: 2
+
+  # Homelab behavior:
+  # deleting PVC deletes the Longhorn volume.
+  # Production would often use Retain.
+  reclaimPolicy: Delete
+
+csi:
+  # Reduce CSI controller replicas for homelab scale.
+  # 2 is enough for this 3-worker lab.
+  attacherReplicaCount: 2
+  provisionerReplicaCount: 2
+  resizerReplicaCount: 2
+  snapshotterReplicaCount: 2
+
+service:
+  ui:
+    # Keep Longhorn UI internal for now.
+    # Access by port-forward until Phase 4 ingress/TLS.
+    type: ClusterIP
+
+longhornUI:
+  # One UI pod is enough for homelab.
+  replicas: 1

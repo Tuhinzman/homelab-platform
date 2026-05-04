@@ -1,0 +1,39 @@
+# cert-manager v1.20.2 values — Phase 4 S6
+# OCI chart: oci://quay.io/jetstack/charts/cert-manager
+
+crds:
+  enabled: true
+  keep: true   # CRDs retained on helm uninstall (prevents accidental cert wipe)
+
+# Controller (top-level keys apply to controller deployment)
+replicaCount: 1
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    memory: 128Mi
+
+# Webhook deployment
+webhook:
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+
+# CA Injector deployment
+cainjector:
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+
+# Prometheus scraping — enabled in Phase 8 (observability)
+prometheus:
+  enabled: false

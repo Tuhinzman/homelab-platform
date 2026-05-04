@@ -1,0 +1,83 @@
+# Phase 3 integration test: MetalLB + ingress-nginx + Longhorn together
+# Pattern: nginx serving static content from Longhorn PVC, exposed via Ingress
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: web-content
+  namespace: default
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 100Mi
+---
+# Init container writes a custom index.html to PVC, main container serves it
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: web }
+  template:
+    metadata:
+      labels: { app: web }
+    spec:
+      initContainers:
+        - name: seed
+          image: alpine:3.20
+          command:
+            - sh
+            - -c
+            - |
+              cat > /data/index.html <<HTML
+              <html><body>
+              <h1>Phase 3 integration test ✅</h1>
+              <p>Storage: Longhorn PVC (replica=2)</p>
+              <p>Routing: ingress-nginx</p>
+              <p>External IP: MetalLB 10.10.0.200</p>
+              <p>Pod: $(hostname) at $(date -u)</p>
+              </body></html>
+              HTML
+          volumeMounts: [{ name: content, mountPath: /data }]
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          volumeMounts:
+            - name: content
+              mountPath: /usr/share/nginx/html
+              readOnly: true
+          ports: [{ containerPort: 80 }]
+      volumes:
+        - name: content
+          persistentVolumeClaim:
+            claimName: web-content
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: default
+spec:
+  selector: { app: web }
+  ports: [{ port: 80, targetPort: 80 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web
+  namespace: default
+spec:
+  rules:
+    - host: integration.lab
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port: { number: 80 }

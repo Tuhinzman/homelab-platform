@@ -1,0 +1,13 @@
+.DS_Store
+*.swp
+*.swo
+
+# Sensitive workspace + materials (added 2026-04-26 — Phase 4 S5)
+homelab-secrets/
+*.key
+*.sparsebundle
+
+# Helm chart cache (transient; chart digests captured in runbooks)
+.helm-cache/
+.claude/settings.local.json
+.claude/settings.local.json

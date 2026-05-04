@@ -1,0 +1,24 @@
+# MetalLB IP pool for Phase 3
+# v2.5 plan L251: lab LoadBalancer range 10.10.0.200–220
+# 21 IPs, isolated lab subnet, no collision with DHCP or static assignments
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: lab-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.10.0.200-10.10.0.220
+  autoAssign: true          # auto-assign to LoadBalancer services that don't request a specific IP
+  avoidBuggyIPs: true       # skip .0 and .255 addresses — not an issue in this range, left on by default
+---
+# L2Advertisement: speakers reply to ARP for pool IPs on the lab network
+# No nodeSelectors: any of our 4 nodes can answer ARP (MetalLB picks the leader per service)
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: lab-l2
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - lab-pool

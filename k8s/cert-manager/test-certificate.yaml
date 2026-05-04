@@ -1,0 +1,30 @@
+# Test Certificate — first issuance proof for ClusterIssuer homelab-signing-ca.
+# Purpose: end-to-end PKI validation (Phase 4 S6 Step 5).
+# Lifecycle: ephemeral — applied, verified, deleted same session.
+# Why namespace cert-manager: keeps test artifacts adjacent to issuer, easy cleanup.
+# Why duration 24h: short-lived; will not pollute renewal queue if cleanup is missed.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: test-cert
+  namespace: cert-manager
+spec:
+  # CN + SAN: single test FQDN under our .lab zone
+  commonName: test.lab
+  dnsNames:
+    - test.lab
+  # Short duration; we delete immediately after verify
+  duration: 24h
+  renewBefore: 12h
+  # Standard 2048-bit leaf (4096 reserved for CAs)
+  privateKey:
+    algorithm: RSA
+    size: 2048
+    rotationPolicy: Always
+  # Issued by our two-tier signing CA (S5)
+  issuerRef:
+    name: homelab-signing-ca
+    kind: ClusterIssuer
+    group: cert-manager.io
+  # Resulting Secret holds tls.crt + tls.key + ca.crt (signing CA cert)
+  secretName: test-cert-tls

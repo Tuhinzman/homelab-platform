@@ -1,0 +1,71 @@
+# Persistent test app for Phase 3 break-it drills
+# Survives across all 3 drills — validates data + traffic continuity
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: drill-content
+  namespace: default
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drill-app
+  namespace: default
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: drill-app } }
+  template:
+    metadata: { labels: { app: drill-app } }
+    spec:
+      initContainers:
+        - name: seed
+          image: alpine:3.20
+          command: [sh, -c]
+          args:
+            - |
+              # Idempotent — only seed if file missing
+              if [ ! -f /data/index.html ]; then
+                echo "Drill app seeded at $(date -u)" > /data/index.html
+              fi
+          # ★★★ FIX: init container needs the volume mounted to write to it ★★★
+          volumeMounts:
+            - { name: content, mountPath: /data }   # writable for init seeding
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          volumeMounts:
+            - { name: content, mountPath: /usr/share/nginx/html, readOnly: true }
+          ports: [{ containerPort: 80 }]
+          readinessProbe:
+            httpGet: { path: /, port: 80 }
+            # Reasonable defaults — initialDelay gives nginx time to start before probing
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            failureThreshold: 3
+      volumes:
+        - { name: content, persistentVolumeClaim: { claimName: drill-content } }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: drill-app, namespace: default }
+spec:
+  selector: { app: drill-app }
+  ports: [{ port: 80, targetPort: 80 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: { name: drill-app, namespace: default }
+spec:
+  rules:
+    - host: drill.lab
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: drill-app, port: { number: 80 } } }

@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 850" role="img" aria-labelledby="t d">
+  <title id="t">Homelab v2.5 end-to-end deployment flow with every tool</title>
+  <desc id="d">Developer on Mac pushes code to GitLab on ci-1. GitLab CI pipeline runs Build (Docker), Scan (Trivy), and Push. Push produces two artifacts: the image goes to GitLab Container Registry and the image tag is updated in homelab-values repo. ArgoCD watches the values repo. When it detects a change, it deploys to the Kubernetes cluster (kubeadm + Calico CNI). Platform runtime services (MetalLB, ingress-nginx, cert-manager, Longhorn, External Secrets Operator) provide always-on support to the Pod. The Pod emits telemetry to OTel Collector in gateway mode, which routes metrics to Prometheus, logs to Loki, and traces to Jaeger. All three feed Grafana.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .t  { font-size: 14px; fill: #3d3d3a; }
+    .ts { font-size: 12px; fill: #73726c; }
+    .th { font-size: 14px; font-weight: 500; fill: #3d3d3a; }
+    .arr { stroke: #73726c; stroke-width: 1.5; fill: none; }
+    .c-gray   > rect { fill: #F1EFE8; stroke: #5F5E5A; }
+    .c-gray   > text.th { fill: #444441; }
+    .c-gray   > text.ts { fill: #5F5E5A; }
+    .c-blue   > rect { fill: #E6F1FB; stroke: #185FA5; }
+    .c-blue   > text.th { fill: #0C447C; }
+    .c-blue   > text.ts { fill: #185FA5; }
+    .c-purple > rect { fill: #EEEDFE; stroke: #534AB7; }
+    .c-purple > text.th { fill: #3C3489; }
+    .c-purple > text.ts { fill: #534AB7; }
+    .c-teal   > rect { fill: #E1F5EE; stroke: #0F6E56; }
+    .c-teal   > text.th { fill: #085041; }
+    .c-teal   > text.ts { fill: #0F6E56; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Developer -->
+  <g class="c-gray">
+    <rect x="270" y="30" width="140" height="44" rx="8" stroke-width="0.5"/>
+    <text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">Developer (Mac)</text>
+  </g>
+  <line x1="340" y1="74" x2="340" y2="105" class="arr" marker-end="url(#arrow)"/>
+  <text class="ts" x="350" y="92" dominant-baseline="central">git push</text>
+
+  <!-- CI zone -->
+  <g class="c-blue">
+    <rect x="40" y="108" width="600" height="150" rx="12" stroke-width="0.5"/>
+    <text class="th" x="58" y="128" dominant-baseline="central">GitLab CI pipeline (on ci-1)</text>
+  </g>
+
+  <g class="c-gray">
+    <rect x="65" y="148" width="170" height="95" rx="6" stroke-width="0.5"/>
+    <text class="th" x="150" y="172" text-anchor="middle" dominant-baseline="central">Build</text>
+    <text class="ts" x="150" y="195" text-anchor="middle" dominant-baseline="central">Docker</text>
+    <text class="ts" x="150" y="215" text-anchor="middle" dominant-baseline="central">multi-stage image</text>
+  </g>
+  <g class="c-gray">
+    <rect x="255" y="148" width="170" height="95" rx="6" stroke-width="0.5"/>
+    <text class="th" x="340" y="172" text-anchor="middle" dominant-baseline="central">Scan</text>
+    <text class="ts" x="340" y="195" text-anchor="middle" dominant-baseline="central">Trivy</text>
+    <text class="ts" x="340" y="215" text-anchor="middle" dominant-baseline="central">HIGH/CRITICAL gate</text>
+  </g>
+  <g class="c-gray">
+    <rect x="445" y="148" width="170" height="95" rx="6" stroke-width="0.5"/>
+    <text class="th" x="530" y="172" text-anchor="middle" dominant-baseline="central">Push</text>
+    <text class="ts" x="530" y="195" text-anchor="middle" dominant-baseline="central">image + tag</text>
+  </g>
+
+  <line x1="235" y1="195" x2="255" y2="195" class="arr" marker-end="url(#arrow)"/>
+  <line x1="425" y1="195" x2="445" y2="195" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- Push → two artifacts -->
+  <path d="M 530 243 L 530 265 L 190 265 L 190 285" class="arr" marker-end="url(#arrow)"/>
+  <path d="M 530 243 L 530 285" class="arr" marker-end="url(#arrow)"/>
+
+  <g class="c-blue">
+    <rect x="90" y="285" width="200" height="56" rx="8" stroke-width="0.5"/>
+    <text class="th" x="190" y="305" text-anchor="middle" dominant-baseline="central">GitLab Container Registry</text>
+    <text class="ts" x="190" y="325" text-anchor="middle" dominant-baseline="central">image storage</text>
+  </g>
+  <g class="c-blue">
+    <rect x="430" y="285" width="200" height="56" rx="8" stroke-width="0.5"/>
+    <text class="th" x="530" y="305" text-anchor="middle" dominant-baseline="central">homelab-values repo</text>
+    <text class="ts" x="530" y="325" text-anchor="middle" dominant-baseline="central">image tag update</text>
+  </g>
+
+  <!-- Values Repo → ArgoCD -->
+  <path d="M 530 341 L 530 365 L 340 365 L 340 385" class="arr" marker-end="url(#arrow)"/>
+  <text class="ts" x="540" y="353" dominant-baseline="central">watches</text>
+
+  <g class="c-blue">
+    <rect x="260" y="385" width="160" height="50" rx="8" stroke-width="0.5"/>
+    <text class="th" x="340" y="405" text-anchor="middle" dominant-baseline="central">ArgoCD</text>
+    <text class="ts" x="340" y="423" text-anchor="middle" dominant-baseline="central">GitOps sync</text>
+  </g>
+
+  <!-- ArgoCD → Pod -->
+  <path d="M 340 435 L 340 495 L 235 495 L 235 520" class="arr" marker-end="url(#arrow)"/>
+  <text class="ts" x="350" y="460" dominant-baseline="central">deploys</text>
+
+  <!-- K8s zone -->
+  <g class="c-gray">
+    <rect x="40" y="475" width="600" height="355" rx="12" stroke-width="0.5"/>
+    <text class="th" x="58" y="495" dominant-baseline="central">Kubernetes cluster</text>
+    <text class="ts" x="170" y="495" dominant-baseline="central">· kubeadm · Calico CNI</text>
+  </g>
+
+  <!-- Column separator -->
+  <line x1="440" y1="510" x2="440" y2="815" stroke="#B4B2A9" stroke-width="0.8" stroke-dasharray="4 4"/>
+  <text class="ts" x="540" y="510" text-anchor="middle" dominant-baseline="central">Platform runtime services</text>
+
+  <!-- Pod -->
+  <g class="c-purple">
+    <rect x="135" y="520" width="200" height="60" rx="8" stroke-width="0.5"/>
+    <text class="th" x="235" y="542" text-anchor="middle" dominant-baseline="central">Pod (workload)</text>
+    <text class="ts" x="235" y="562" text-anchor="middle" dominant-baseline="central">OTel Demo apps</text>
+  </g>
+
+  <!-- Pod → sidebar "uses" -->
+  <line x1="335" y1="550" x2="440" y2="550" stroke="#888780" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <text class="ts" x="387" y="544" text-anchor="middle" dominant-baseline="central">uses</text>
+
+  <!-- Sidebar: platform tools -->
+  <g class="c-purple">
+    <rect x="450" y="520" width="180" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="540" y="538" text-anchor="middle" dominant-baseline="central">MetalLB</text>
+    <text class="ts" x="540" y="556" text-anchor="middle" dominant-baseline="central">LoadBalancer IP</text>
+  </g>
+  <g class="c-purple">
+    <rect x="450" y="575" width="180" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="540" y="593" text-anchor="middle" dominant-baseline="central">ingress-nginx</text>
+    <text class="ts" x="540" y="611" text-anchor="middle" dominant-baseline="central">HTTPS routing</text>
+  </g>
+  <g class="c-purple">
+    <rect x="450" y="630" width="180" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="540" y="648" text-anchor="middle" dominant-baseline="central">cert-manager</text>
+    <text class="ts" x="540" y="666" text-anchor="middle" dominant-baseline="central">TLS automation</text>
+  </g>
+  <g class="c-purple">
+    <rect x="450" y="685" width="180" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="540" y="703" text-anchor="middle" dominant-baseline="central">Longhorn</text>
+    <text class="ts" x="540" y="721" text-anchor="middle" dominant-baseline="central">PVC · 2 replicas</text>
+  </g>
+  <g class="c-purple">
+    <rect x="450" y="740" width="180" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="540" y="758" text-anchor="middle" dominant-baseline="central">External Secrets</text>
+    <text class="ts" x="540" y="776" text-anchor="middle" dominant-baseline="central">local → SSM later</text>
+  </g>
+
+  <!-- Pod → OTel -->
+  <line x1="235" y1="580" x2="235" y2="605" class="arr" marker-end="url(#arrow)"/>
+  <text class="ts" x="245" y="592" dominant-baseline="central">telemetry</text>
+
+  <g class="c-teal">
+    <rect x="145" y="605" width="180" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="235" y="623" text-anchor="middle" dominant-baseline="central">OTel Collector</text>
+    <text class="ts" x="235" y="641" text-anchor="middle" dominant-baseline="central">gateway mode</text>
+  </g>
+
+  <!-- OTel → 3 obs tools -->
+  <line x1="235" y1="655" x2="235" y2="670" class="arr"/>
+  <path d="M 235 670 L 115 670 L 115 685" class="arr" marker-end="url(#arrow)"/>
+  <path d="M 235 670 L 235 685" class="arr" marker-end="url(#arrow)"/>
+  <path d="M 235 670 L 355 670 L 355 685" class="arr" marker-end="url(#arrow)"/>
+
+  <g class="c-teal">
+    <rect x="60" y="685" width="110" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="115" y="703" text-anchor="middle" dominant-baseline="central">Prometheus</text>
+    <text class="ts" x="115" y="721" text-anchor="middle" dominant-baseline="central">metrics</text>
+  </g>
+  <g class="c-teal">
+    <rect x="180" y="685" width="110" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="235" y="703" text-anchor="middle" dominant-baseline="central">Loki</text>
+    <text class="ts" x="235" y="721" text-anchor="middle" dominant-baseline="central">logs</text>
+  </g>
+  <g class="c-teal">
+    <rect x="300" y="685" width="110" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="355" y="703" text-anchor="middle" dominant-baseline="central">Jaeger</text>
+    <text class="ts" x="355" y="721" text-anchor="middle" dominant-baseline="central">traces</text>
+  </g>
+
+  <!-- 3 obs → Grafana -->
+  <path d="M 115 735 L 115 750 L 235 750 L 235 760" class="arr" marker-end="url(#arrow)"/>
+  <path d="M 235 735 L 235 760" class="arr" marker-end="url(#arrow)"/>
+  <path d="M 355 735 L 355 750 L 235 750 L 235 760" class="arr" marker-end="url(#arrow)"/>
+
+  <g class="c-teal">
+    <rect x="145" y="760" width="180" height="50" rx="6" stroke-width="0.5"/>
+    <text class="th" x="235" y="778" text-anchor="middle" dominant-baseline="central">Grafana</text>
+    <text class="ts" x="235" y="796" text-anchor="middle" dominant-baseline="central">unified UI</text>
+  </g>
+</svg>
