@@ -1,3 +1,7 @@
+> **Archived historical snapshot**
+>
+> This repository is an earlier public mirror and is no longer the current portfolio project. The current recruiter-facing repository is [Bare-Metal Kubernetes Platform](https://github.com/Tuhinzman/bare-metal-kubernetes-platform). It contains the verified platform work through Phase 13, with evidence, limitations, and current scope.
+
 <div align="center">
 
 # Homelab Platform v2.5
